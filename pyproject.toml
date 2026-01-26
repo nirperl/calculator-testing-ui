@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "calculatorTester"
+version = "1.0.0"
+description = "Enterprise-grade automation framework for AI/ML and Cybersecurity"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    { name = "Staff Automation Architect", email = "your.email@example.com" }
+]
+dependencies = [
+    "playwright==1.57.0",
+    "pytest-playwright==0.7.2",
+    "pytest==9.0.0",
+    "pydantic==2.12.5",
+    "pytest-asyncio>=1.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",     # Formatter
+    "ruff",      # Fast Linter (replaces Flake8/Isort)
+    "mypy",      # Static Type Checking
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+testpaths = ["tests"]
+addopts = "--browser chromium --headed --slowmo 500"
+python_files = "test_*.py"
+markers = [
+    "smoke: quick verification tests",
+    "regression: full suite coverage",
+]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I"] # Error, Pyflakes, Isort
+
+[tool.mypy]
+python_version = "3.13.5"
+strict = true
