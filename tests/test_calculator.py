@@ -1,27 +1,34 @@
+from calendar import firstweekday
+
 import pytest
-import pytest_asyncio
-from playwright.async_api import Page
-from src.web.calculator import CalculatorPage, OperatorType
+from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
+
+from src.web.calculator import OperatorType, PageManager
 
 
-@pytest_asyncio.fixture(scope="session")
-async def new_page(browser) -> Page:
-    context = await browser.new_context()
-    page = await context.new_page()
-    yield page
-    await context.close()
+@pytest.fixture(scope="session")
+def browser():
+    """Session-scoped browser fixture"""
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        yield browser
+        browser.close()
 
-@pytest_asyncio.fixture(scope="function")
-async def calculator(new_page) -> CalculatorPage:
-    return CalculatorPage(new_page, "https://testsheepnz.github.io/BasicCalculator.html")
+
+DATA = [
+    ("10", "5", OperatorType.ADD, "15"),
+    ("12", "3", OperatorType.DIVIDE, "4"),
+    ("2", "4", OperatorType.MULTIPLY, "8"),
+    ("10", "5", OperatorType.SUBTRACT, "5"),
+    ("100", "25", OperatorType.CONCATENATE, "10025")
+]
 
 
 class TestCalculator:
-    @pytest.mark.asyncio
-    async def test_add(self, calculator: CalculatorPage):
-        await calculator.navigate()
-        await calculator.set_first_number(5)
-        await calculator.set_second_number(10)
-        await calculator.set_operator(OperatorType.ADD)
-        await calculator.click_calculate()
-        assert await calculator.get_answer() == "15"
+    @pytest.mark.parametrize("first_num, second_num, operator, expected_answer", DATA)
+    def test_positive_flow(self, browser, first_num, second_num, operator: OperatorType, expected_answer):
+        page_manager: PageManager = PageManager(browser, "https://testsheepnz.github.io/BasicCalculator.html")
+        page_manager.initialize()
+        page_manager.calculator.navigate()
+        assert page_manager.calculator.check_answer(first_num, second_num, operator, expected_answer)
