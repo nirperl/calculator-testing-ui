@@ -17,7 +17,7 @@ def browser():
 
 
 DATA = [
-    ("10", "5", OperatorType.ADD, "15"),
+    ("10.3", "5", OperatorType.ADD, "15.3"),
     ("12", "3", OperatorType.DIVIDE, "4"),
     ("2", "4", OperatorType.MULTIPLY, "8"),
     ("10", "5", OperatorType.SUBTRACT, "5"),
