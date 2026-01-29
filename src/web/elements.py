@@ -1,5 +1,4 @@
 from playwright.sync_api import Page, expect
-from web.calculator import OperatorType
 
 
 class Inputbox:
@@ -12,8 +11,8 @@ class Inputbox:
         return self._page.locator(self._locator).input_value()
 
     @value.setter
-    def value(self, num: str):
-        self._page.locator(self._locator).fill(num)
+    def value(self, text: str):
+        self._page.locator(self._locator).fill(text)
 
     def wait_for_value(self, expected_answer: str) -> bool:
         try:
@@ -31,8 +30,15 @@ class DropDownList:
 
     @property
     def value(self) -> str:
-        return self._page.locator("#selectOperationDropdown").input_value()
+        return self._page.locator(self._locator).input_value()
 
     @value.setter
-    def value(self, operator: OperatorType):
-        self._page.locator("#selectOperationDropdown").select_option(index=operator.value)
+    def value(self, operator: str | int, by_index: bool = False):
+        if by_index:
+            self._page.locator(self._locator).select_option(index=operator)
+        else:
+            self._page.locator(self._locator).select_option(value=operator)
+
+    @property
+    def all_values(self) -> list[str]:
+        return self._page.locator(self._locator).all_inner_texts()
