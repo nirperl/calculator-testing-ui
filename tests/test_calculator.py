@@ -39,7 +39,8 @@ class TestCalculator:
         page_manager.initialize()
         page_manager.calculator.navigate()
         page_manager.calculator.build.value = build
-        assert page_manager.calculator.check_answer(first_num, second_num, operator, expected_answer)
+        assert page_manager.calculator.check_answer(first_num, second_num, operator,
+                                                    expected_answer)
 
 
     def test_wrong_values(self, browser):
