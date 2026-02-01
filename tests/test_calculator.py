@@ -11,7 +11,7 @@ from src.web.calculator import OperatorType, PageManager
 def browser():
     """Session-scoped browser fixture"""
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch()
         yield browser
         browser.close()
 
