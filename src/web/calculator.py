@@ -18,10 +18,10 @@ class CalculatorPage:
         self._page: Page = page
         self.url = url
 
-        self.build = DropDownList(self._page,"#selectBuild")
-        self.first_number = Inputbox(self._page,"#number1Field")
-        self.second_number = Inputbox(self._page,"#number2Field")
-        self.operator = DropDownList(self._page,"#selectOperationDropdown")
+        self.build = DropDownList(self._page, "#selectBuild")
+        self.first_number = Inputbox(self._page, "#number1Field")
+        self.second_number = Inputbox(self._page, "#number2Field")
+        self.operator = DropDownList(self._page, "#selectOperationDropdown")
         self.answer = Inputbox(self._page, "input[id='numberAnswerField']")
 
     def navigate(self):
@@ -42,8 +42,9 @@ class CalculatorPage:
     def get_error_message(self):
         self._page.locator("#errorMsgField").text_content()
 
-    def check_answer(self, first_num, second_num, operator: OperatorType, expected_answer: str) \
-            -> bool:
+    def check_answer(
+        self, first_num, second_num, operator: OperatorType, expected_answer: str
+    ) -> bool:
         self.first_number.value = first_num
         self.second_number.value = second_num
         self.operator.value = str(operator.value)
