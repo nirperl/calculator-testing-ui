@@ -42,7 +42,8 @@ class CalculatorPage:
     def get_error_message(self):
         self._page.locator("#errorMsgField").text_content()
 
-    def check_answer(self, first_num, second_num, operator: OperatorType, expected_answer: str) -> bool:
+    def check_answer(self, first_num, second_num, operator: OperatorType, expected_answer: str) \
+            -> bool:
         self.first_number.value = first_num
         self.second_number.value = second_num
         self.operator.value = str(operator.value)
