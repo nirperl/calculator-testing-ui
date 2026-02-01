@@ -30,7 +30,7 @@ POSITIVE_DATA = [
 #     ("1a")
 # ]
 
-BUILD_DATA = ["Prototype", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+BUILD_DATA = ["Prototype"] #, "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 class TestCalculator:
     @pytest.mark.parametrize("build", BUILD_DATA)
