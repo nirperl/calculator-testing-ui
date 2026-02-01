@@ -1,7 +1,4 @@
-from calendar import firstweekday
-
 import pytest
-from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
 from src.web.calculator import OperatorType, PageManager
@@ -35,8 +32,10 @@ BUILD_DATA = ["Prototype"] #, "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 class TestCalculator:
     @pytest.mark.parametrize("build", BUILD_DATA)
     @pytest.mark.parametrize("first_num, second_num, operator, expected_answer", POSITIVE_DATA)
-    def test_positive_flow(self, browser, build, first_num, second_num, operator: OperatorType, expected_answer):
-        page_manager: PageManager = PageManager(browser, "https://testsheepnz.github.io/BasicCalculator.html")
+    def test_positive_flow(self, browser, build, first_num, second_num, operator: OperatorType,
+                           expected_answer):
+        page_manager: PageManager = PageManager(browser,
+                                                "https://testsheepnz.github.io/BasicCalculator.html")
         page_manager.initialize()
         page_manager.calculator.navigate()
         page_manager.calculator.build.value = build
@@ -46,7 +45,8 @@ class TestCalculator:
     def test_wrong_values(self, browser):
         too_long_num = "11111111111"
         max_size_num = "1111111111"
-        page_manager: PageManager = PageManager(browser, "https://testsheepnz.github.io/BasicCalculator.html")
+        page_manager: PageManager = PageManager(browser,
+                                                "https://testsheepnz.github.io/BasicCalculator.html")
         page_manager.initialize()
         page_manager.calculator.navigate()
         page_manager.calculator.first_number.value = too_long_num
