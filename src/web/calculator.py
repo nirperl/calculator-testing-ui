@@ -1,6 +1,8 @@
 from enum import Enum
+
 from playwright.sync_api import Page
-from web.elements import Inputbox, DropDownList
+
+from web.elements import DropDownList, Inputbox
 
 
 class OperatorType(Enum):
