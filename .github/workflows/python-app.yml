@@ -27,7 +27,7 @@ jobs:
         enable-cache: true
     - name: Install dependencies
       run: |
-        if [ -f pyproject.toml ]; then uv sync --frozen --no-install-project --no-dev; fi
+        if [ -f pyproject.toml ]; then uv sync --frozen --no-install-project --extra dev; fi
         uv run playwright install
     - name: Lint and Format with Ruff
       run: |
